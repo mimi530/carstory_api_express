@@ -1,11 +1,19 @@
 const express = require("express");
+const error = require("./src/middleware/error");
 const app = express();
 
-const port = process.env.PORT || 3000;
+const port = process.env.APP_PORT || 3000;
 
-app.listen(port, () =>
-  console.log(`Listening on port ${port}...`)
-);
-app.get('/', (req, res) => {
-    res.send('testuje test');
-})
+app.use(error);
+app.use(express.json());
+
+require("./src/routes/routes")(app);
+require("./src/config/db.config")();
+require("./src/config/validation.config")();
+
+if(!process.env.JWT_SECRET) {
+    console.error('ERROR: JWT_SECRET is not defined');
+    process.exit(1);
+}
+
+app.listen(port, () => console.log(`Listening on port ${port}...`));
