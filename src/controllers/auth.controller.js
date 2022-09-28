@@ -16,9 +16,10 @@ async function register(req, res, next) {
     await user.save();
 
     const token = user.generateAuthToken();
-    res.header("x-auth-token", token).send(
-        _.pick(user, ["_id", "name", "email"])
-    );
+    res.send({
+        user: _.pick(user, ["name", "email"]),
+        token: token,
+    });
 }
 
 async function login(req, res, next) {
@@ -36,7 +37,10 @@ async function login(req, res, next) {
         return res.status(400).send("Invalid email or password.");
 
     const token = user.generateAuthToken();
-    res.send(token);
+    res.send({
+        user: _.pick(user, ["name", "email"]),
+        token: token,
+    });
 }
 
 function validate(req) {

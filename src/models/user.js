@@ -34,6 +34,7 @@ function validateUser(user) {
         name: Joi.string().max(255).required(),
         email: Joi.string().min(5).max(255).required().email(),
         password: Joi.string().min(8).max(255).required(),
+        password_confirmation: Joi.any().equal(Joi.ref('password')).required().messages({ 'any.only': '{{#label}} does not match' })
     })
     return schema.validate(user);
 }
