@@ -12,7 +12,7 @@ async function index(req, res, next) {
             title: repair.title,
             milage: repair.milage,
             description: repair.description,
-            date: repair.date,
+            date: repair.date.toLocaleDateString(),
         };
     });
 
@@ -59,7 +59,7 @@ async function update(req, res, next) {
         date: req.body.date,
     });
     await repair.save();
-    
+
     res.send({
         repair: {
             uuid: repair._id,
