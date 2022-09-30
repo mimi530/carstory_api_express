@@ -2,6 +2,7 @@ const { Repair, validateRepair } = require("../models/repair");
 const _ = require("lodash");
 const Joi = require("joi");
 const { Car } = require("../models/car");
+const dayjs = require("dayjs");
 
 async function index(req, res, next) {
     let repairs = await Repair.find({ car_id: req.car._id });
@@ -12,7 +13,7 @@ async function index(req, res, next) {
             title: repair.title,
             milage: repair.milage,
             description: repair.description === '' ? null : repair.description,
-            date: repair.date.toLocaleDateString(),
+            date: dayjs(repair.date).format('YYYY-MM-DD'),
         };
     });
 
@@ -60,6 +61,7 @@ async function update(req, res, next) {
     });
     await repair.save();
 
+    console.log(req.body)
     res.send({
         repair: {
             uuid: repair._id,
