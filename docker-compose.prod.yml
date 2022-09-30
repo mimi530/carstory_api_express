@@ -10,8 +10,6 @@ services:
       - MONGO_INITDB_DATABASE=$MONGODB_DBNAME
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
-    networks:
-      - carstory_express
   node:
     restart: unless-stopped
     depends_on:
@@ -30,8 +28,6 @@ services:
       - MONGODB_URL=mongodb://$MONGODB_USER:$MONGODB_PASSWORD@mongo:$MONGODB_PORT/$MONGODB_DBNAME
       - VIRTUAL_HOST=$VIRTUAL_HOST
       - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
-    networks:
-      - carstory_express
 volumes:
   mongodb:
 networks:
