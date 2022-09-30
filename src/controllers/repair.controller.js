@@ -11,7 +11,7 @@ async function index(req, res, next) {
             uuid: repair._id,
             title: repair.title,
             milage: repair.milage,
-            description: repair.description,
+            description: repair.description === '' ? null : repair.description,
             date: repair.date.toLocaleDateString(),
         };
     });

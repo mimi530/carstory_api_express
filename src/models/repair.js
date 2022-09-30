@@ -7,10 +7,7 @@ const repairSchema = new mongoose.Schema({
         required: true,
         maxlength: 255,
     },
-    description: {
-        type: String,
-        maxlength: 500
-    },
+    description: {},
     milage: {
         type: Number,
     },
@@ -30,7 +27,7 @@ function validateRepair(repair) {
     const schema = Joi.object({
         title: Joi.string().max(255).required(),
         milage: Joi.number(),
-        description: Joi.string().max(500).allow(null).allow('').optional(),
+        description: Joi.string().empty(''),
         date: Joi.date(),
     });
     return schema.validate(repair);
