@@ -17,7 +17,7 @@ services:
     depends_on:
       - mongo
     build: ./
-    command: npm start:prod
+    command: npm run prod
     ports: 
       - "$APP_PORT:$APP_PORT"
     volumes:
@@ -27,7 +27,7 @@ services:
       - NODE_ENV=$NODE_ENV
       - APP_PORT=$APP_PORT
       - JWT_SECRET=$JWT_SECRET
-      - MONGODB_URL=$MONGODB_URL
+      - MONGODB_URL=mongodb://$MONGODB_USER:$MONGODB_PASSWORD@mongo:$MONGODB_PORT/$MONGODB_DBNAME
       - VIRTUAL_HOST=$VIRTUAL_HOST
       - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
     networks:
