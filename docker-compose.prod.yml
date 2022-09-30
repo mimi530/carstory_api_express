@@ -18,8 +18,8 @@ services:
       - mongo
     build: ./
     command: npm run prod
-    ports: 
-      - "$APP_PORT:$APP_PORT"
+    expose: 
+      - $APP_PORT
     volumes:
       - ./:/app
       - /app/node_modules
