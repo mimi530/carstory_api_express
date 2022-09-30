@@ -61,7 +61,6 @@ async function update(req, res, next) {
     });
     await repair.save();
 
-    console.log(req.body)
     res.send({
         repair: {
             uuid: repair._id,
