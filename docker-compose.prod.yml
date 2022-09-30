@@ -38,5 +38,3 @@ networks:
   default:
     external:
       name: nginx-proxy
-  carstory_express:
-    driver: 'bridge'
