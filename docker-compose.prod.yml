@@ -6,28 +6,31 @@ services:
       - $MONGODB_PORT:$MONGODB_PORT
     volumes:
       - mongodb:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=$MONGODB_DBNAME
+      - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     networks:
-      - localnet
+      - carstory_express
   node:
     restart: unless-stopped
     depends_on:
       - mongo
     build: ./
-    command: npm start
+    command: npm start:prod
     ports: 
       - "$APP_PORT:$APP_PORT"
     volumes:
       - ./:/app
-      # - /app/node_modules
+      - /app/node_modules
     environment:
       - NODE_ENV=$NODE_ENV
       - APP_PORT=$APP_PORT
       - JWT_SECRET=$JWT_SECRET
       - MONGODB_URL=$MONGODB_URL
+      - VIRTUAL_HOST=$VIRTUAL_HOST
+      - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
     networks:
-      - localnet
+      - carstory_express
 volumes:
   mongodb:
-networks:
-  localnet:
-    driver: 'bridge'

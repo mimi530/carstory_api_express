@@ -11,6 +11,9 @@ require("./src/routes/routes")(app);
 require("./src/config/db.config")();
 require("./src/config/validation.config")();
 
+if(process.env.NODE_ENV === 'production')
+    require("./src/config/prod.config")(app)
+
 if(!process.env.JWT_SECRET) {
     console.error('ERROR: JWT_SECRET is not defined');
     process.exit(1);
