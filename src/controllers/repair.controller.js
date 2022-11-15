@@ -1,7 +1,4 @@
 const { Repair, validateRepair } = require("../models/repair");
-const _ = require("lodash");
-const Joi = require("joi");
-const { Car } = require("../models/car");
 const dayjs = require("dayjs");
 
 async function index(req, res, next) {
@@ -12,8 +9,8 @@ async function index(req, res, next) {
             uuid: repair._id,
             title: repair.title,
             milage: repair.milage,
-            description: repair.description === '' ? null : repair.description,
-            date: dayjs(repair.date).format('YYYY-MM-DD'),
+            description: repair.description === "" ? null : repair.description,
+            date: dayjs(repair.date).format("YYYY-MM-DD"),
         };
     });
 

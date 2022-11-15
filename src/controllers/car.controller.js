@@ -1,6 +1,4 @@
 const { Car, validateCar } = require("../models/car");
-const _ = require("lodash");
-const Joi = require("joi");
 
 async function index(req, res, next) {
     let cars = await Car.find({ user_id: req.user._id });
