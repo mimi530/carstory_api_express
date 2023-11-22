@@ -13,11 +13,13 @@ services:
     container_name: mongodb.api.carstory.mdomzalski.pl
   api_carstory:
     restart: unless-stopped
+    env_file:
+      - ./.env
     depends_on:
-      - mongo
+      - mongodb_carstory
     build: ./
     command: npm run prod
-    expose: 
+    expose:
       - $APP_PORT
     volumes:
       - /app/node_modules
