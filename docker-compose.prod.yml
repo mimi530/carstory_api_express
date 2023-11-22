@@ -1,5 +1,5 @@
 services:
-  mongo:
+  mongodb_carstory:
     image: mongo:4.4.6
     restart: unless-stopped
     ports:
@@ -10,8 +10,8 @@ services:
       - MONGO_INITDB_DATABASE=$MONGODB_DBNAME
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
-    container_name: api.carstory.mdomzalski.pl_db
-  node:
+    container_name: mongodb.api.carstory.mdomzalski.pl
+  api_carstory:
     restart: unless-stopped
     depends_on:
       - mongo
@@ -21,17 +21,20 @@ services:
       - $APP_PORT
     volumes:
       - /app/node_modules
-    environment:
-      - NODE_ENV=$NODE_ENV
-      - APP_PORT=$APP_PORT
-      - JWT_SECRET=$JWT_SECRET
-      - MONGODB_URL=mongodb://$MONGODB_USER:$MONGODB_PASSWORD@mongo:$MONGODB_PORT/$MONGODB_DBNAME
-      - VIRTUAL_HOST=$VIRTUAL_HOST
-      - LETSENCRYPT_HOST=$LETSENCRYPT_HOST
     container_name: api.carstory.mdomzalski.pl
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-carstory.rule=Host(`api.carstory.mdomzalski.pl`,`www.api.carstory.mdomzalski.pl`)"
+      - "traefik.http.routers.api-carstory.entrypoints=websecure"
+      - "traefik.http.routers.api-carstory.tls.certresolver=production"
+      - "traefik.http.routers.api-carstory-https.tls=true"
+      - "traefik.http.routers.api-carstory-https.rule=Host(`api.carstory.mdomzalski.pl`,`www.api.carstory.mdomzalski.pl`)"
+      - "traefik.http.routers.api-carstory-https.entrypoints=websecure"
+      - "traefik.http.routers.api-carstory-https.service=api-carstory"
+      - "traefik.http.services.carstory.loadbalancer.server.port=80"
 volumes:
   mongodb:
 networks:
   default:
-    external:
-      name: nginx-proxy
+    name: traefik
+    external: true
