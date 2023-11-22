@@ -13,7 +13,7 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
     container_name: mongodb.api.carstory.mdomzalski.pl
-  api-carstory:
+  api_carstory:
     restart: unless-stopped
     env_file:
       - .env
@@ -35,7 +35,7 @@ services:
       - "traefik.http.routers.api-carstory-https.rule=Host(`api.carstory.mdomzalski.pl`,`www.api.carstory.mdomzalski.pl`)"
       - "traefik.http.routers.api-carstory-https.entrypoints=websecure"
       - "traefik.http.routers.api-carstory-https.service=api-carstory"
-      - "traefik.http.services.carstory.loadbalancer.server.port=80"
+      - "traefik.http.services.api-carstory.loadbalancer.server.port=80"
 volumes:
   mongodb:
 networks:
